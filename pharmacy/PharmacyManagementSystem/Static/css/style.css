@@ -1,0 +1,84 @@
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+/* Show it is fixed to the top */
+body {
+    min-height: 75rem;
+    padding-top: 4.5rem;
+    background: #337ab7;
+  }
+  .jumbtron{
+    width: 100%;
+  }
+  .table{
+    font-size: 1.5em;
+    text-align: center;
+    width: 95%;
+    margin: auto;
+  }
+  /* make alternating colors for the rows*/
+  .table tr:nth-child(odd){
+    background: #B8CAE4;
+  }
+  .table tr:nth-child(even){
+    background: #dae5f4;
+  }
+  .table th{
+    color: #fff;
+    background: #337ab7;
+  }
+
+  .display-table{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 20px;
+    /*box-shadow: 12px 12px 20px 6px #2e6da4;*/
+  }
+  .header{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #337ab7;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    display: block;
+    text-shadow: 6px 6px 6px 6px #c9c9c9;
+  }
+
+  .success{
+    list-style: none;
+    text-align: center;
+    color: white;
+    background: #2e6da4;
+  }
+  .mybutton{
+    width:100%;
+  }
+  .addMedicine{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 20px;
+    align-items: center;
+    box-shadow: 12px 12px 20px 6px #2e6da4;
+  }
+  .row{
+    margin-left: 38%;
+  }
+  .myForm{
+    margin: 30px;
+  }
+
+  .container{
+    margin:  auto;
+  }

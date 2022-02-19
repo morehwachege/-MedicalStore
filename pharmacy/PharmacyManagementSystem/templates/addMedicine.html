@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy</title>
+    <!---Custom CSS-->
+    <link href=" {% static 'css/style.css' %}" rel="stylesheet" >
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/navbar-fixed/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href=" {% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
+<script src="{% static 'bootstrap.min.js' %}"></script>  
+
+
+
+
+    
+    <!-- Custom styles for this template -->
+    <link href="navbar-top-fixed.css" rel="stylesheet">
+  </head>
+  <body>
+    
+{% include 'navbar.html' %}
+
+<main role="main" class="containers mx-5">
+  <div class="jumbotron">
+    <h1 class="text-center pb-4 text-uppercase">  {{title}}</h1>
+    <div class="row">
+     <div class="col-sm-5 mx-5">
+     <div class="addMedicine">
+      <form action="" method="POST">{% csrf_token %} <br>
+        <div class="ml-5"
+      {{ form.as_p }}
+      <input class="btn btn-success" type="submit" value="SAVE">
+      </div>
+    </form>
+    </div>
+    </div>
+    </div>
+  </div>
+</main>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/docs/4.6/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+      
+  </body>
+</html>
