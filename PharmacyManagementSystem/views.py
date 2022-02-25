@@ -22,7 +22,7 @@ def index(request):
         "title": title,
         "test": form,
     }
-    return render(request, "index.html", context)
+    return render(request, "pharmacy/index.html", context)
 
 #medicine list
 def medList(request):
@@ -43,7 +43,7 @@ def medList(request):
         "queryset": queryset,
         "form": form,
     }
-    return render(request, "medList.html", context)
+    return render(request, "pharmacy/medList.html", context)
 
 
 def addMedicine(request):
@@ -55,7 +55,7 @@ def addMedicine(request):
         "form": form,
         "title": "Add Medicine",
     }
-    return render(request, "addMedicine.html", context)
+    return render(request, "pharmacy/addMedicine.html", context)
 
     #view medicine details
 def medicineDetail(request, pk):
@@ -64,7 +64,7 @@ def medicineDetail(request, pk):
         "title": queryset.MedicineName,
         "queryset": queryset,
     }
-    return render(request, 'medicineDetail.html', context)
+    return render(request, 'pharmacy/medicineDetail.html', context)
 
     #delete Medicine view
 def deleteMedicine(request, pk):
@@ -73,7 +73,7 @@ def deleteMedicine(request, pk):
        queryset.delete()
        messages.success(request, "Successfully Deleted!")
        return redirect('/medList')
-    return render(request, 'deleteMedicine.html')
+    return render(request, 'pharmacy/deleteMedicine.html')
 
 #Update Medicine
 def MedicineUpdate(request, pk):
@@ -88,7 +88,7 @@ def MedicineUpdate(request, pk):
         "form":form,
         "title": "Update Item"
     }
-    return render(request, 'addMedicine.html', context)
+    return render(request, 'pharmacy/addMedicine.html', context)
 
 #Issue Medicine view
 def IssueMedicine(request, pk):
@@ -111,7 +111,7 @@ def IssueMedicine(request, pk):
             "form": form,
             "username":'Issued By:' + str(request.user),
         }
-    return render(request, 'addMedicine.html', context)
+    return render(request, 'pharmacy/addMedicine.html', context)
 
 #Receive Medicine
 def ReceiveMedicine(request, pk):
@@ -134,7 +134,7 @@ def ReceiveMedicine(request, pk):
             "form": form,
             "username":'Received By:' + str(request.user),
         }
-    return render(request, 'addMedicine.html', context)
+    return render(request, 'pharmacy/addMedicine.html', context)
 
     #medicine reorder level alert
 def medReorderLevel(request, pk):
@@ -148,7 +148,7 @@ def medReorderLevel(request, pk):
         "instance":queryset,
         "form": form,
     }
-    return render(request, 'addMedicine.html', context)
+    return render(request, 'pharmacy/addMedicine.html', context)
 
 #update customer record
 def UpdateCustomer(request, pk):
@@ -163,7 +163,17 @@ def UpdateCustomer(request, pk):
         "form":form,
         "title": "Update Item"
     }
-    return render(request, 'registerCustomer.html', context)
+    return render(request, 'pharmacy/registerCustomer.html', context)
+
+    #view single customer record
+def customerDetails(request, pk):
+    customer = Customer.objects.get(id=pk)
+    context ={
+        "title": customer.firstName,
+        "customers": customer,
+    }
+    return render(request, 'pharmacy/customerDetail.html', context)
+
 
 #Delete Record
 def deleteCustomer(request, pk):
@@ -171,18 +181,18 @@ def deleteCustomer(request, pk):
     if request.method == 'POST':
         queryset.delete()
         return HttpResponseRedirect('/customerRecords')
-    return render(request, 'deleteCustomer.html')
+    return render(request, 'pharmacy/deleteCustomer.html')
 
 #Register Customers
 #@login_required
 def customerRecords(request):
     title = 'Customers'
-    queryset = Customer.objects.all()
+    customer = Customer.objects.all()
     context ={
         "title": title,
-        "queryset":queryset,
+        "customers":customer,
     }
-    return render(request, "customerRecords.html", context)
+    return render(request, "pharmacy/customerRecords.html", context)
 def registerCustomer(request):
     form = CustomerCreateForm(request.POST or None)
     if form.is_valid():
@@ -192,7 +202,7 @@ def registerCustomer(request):
             "form": form,
             "title": "Register New Customer"
         }
-    return render(request, "registerCustomer.html", context)
+    return render(request, "pharmacy/registerCustomer.html", context)
 
 #pharmacist
 def addPharmacist(request):

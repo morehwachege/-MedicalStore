@@ -1,0 +1,23 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+<main role="main" class="containers mx-5">
+  <div class="jumbotron">
+    <h1 class="text-center pb-4 text-uppercase">  {{title}}</h1>
+    <div class="row">
+     <div class="col-sm-5 mx-5">
+     <div class="addMedicine">
+      <form action="" method="POST">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input class="btn btn-success" type="submit" value="SAVE">
+    </form>
+    </div>
+    </div>
+    </div>
+  </div>
+</main>
+{% endblock content %}

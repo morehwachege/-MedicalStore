@@ -1,0 +1,75 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+{% include 'partials/navbar.html' %}
+<main role="main" class="container">
+  {% if messages %}
+  <ul class="messages">
+  {% for message in messages %}
+  <li {% if messages.tags %} class="{{message.tags}}"{% endif %}> {{ message }}</li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+    <div class="jumbotron">
+      <h1 class="text-center header">  {{title}}</h1>
+        <div class="row">
+        <div class="col-sm-2">
+  
+       <form action="" method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary mybutton " type="submit" value="Search">
+  
+      </form>
+      <!--add medicine button-->
+      <a href="/addMedicine"> <div class="btn btn-success mt-2 rounded-pill mybutton">ADD MEDICINE</div></a>
+      </div>
+      <div class="col-sm-10">
+      <div class="display-table">
+      <table class="table">
+        <thead>
+          <tr>
+          <th>NUMBER</th>
+          <th>CATEGORY</th>
+          <th>MEDICINE NAME</th>
+          <th>QUANTITY IN STORE</th>
+          <th>REORDER LEVEL</th>
+          <th>DELETE</th>
+          </tr>
+        </thead>
+        {% for instance in queryset %}
+        <tr>
+        
+          </td>
+          <td>{{ forloop.counter}}</td>
+          <td>{{instance.category}}</td>
+          <td><a href="{% url 'MedicineUpdate' instance.id %}"> {{instance.MedicineName}}</a></td>
+          <td>
+          {% if instance.quantity <= reorderLevel %}
+          <div style="background-color: orange; ">
+          <a href=" {% url 'medicineDeatil' instance.id %}"> {{ instance.quantity}}</a>
+          </div>
+           {% else %} 
+          <a href="{% url 'medicineDeatil' instance.id %}"> {{instance.quantity}}</a>
+          {% endif %}
+          </td>
+  
+          <td><a href="{% url 'medReorderLevel' instance.id %}"> {{ instance.reorderLevel}}</a></td>
+          <td><a href= "{% url 'deleteMedicine' instance.id %}">DELETE </a></td>
+        </tr>
+        {% endfor %}
+      </table>
+      </div>
+      </div>
+     
+   
+     </div>
+  </div>
+  </main>
+
+{% endblock content %}
+
+    
+
+
+
+

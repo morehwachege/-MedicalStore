@@ -1,0 +1,20 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'navbar.html'  %}
+
+<main role="main" class="container">
+  <div class="jumbotron">
+   <form action="" method="POST">{% csrf_token %}
+   <h1 class="text-text-capitalize"> are you sure you want to delete selected item?</h1>
+        {{form.as_p}}
+        <input class="btn btn-danger" type="submit" value="Yes">
+        <a href="/medList"><div class="btn btn-primary">Cancel</div></a>
+    </form>
+    
+  </div>
+</main>
+
+{% endblock content %}

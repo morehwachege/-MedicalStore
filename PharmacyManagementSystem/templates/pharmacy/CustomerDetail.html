@@ -1,0 +1,48 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<main role="main" class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">  {{title}}</h1>  
+     <a href=" {% url 'IssueMedicine' queryset.id %} ">
+         <div class="btn btn-danger">ISSUE THIS ITEM</div>
+     </a>
+     <a href=" {% url 'ReceiveMedicine' queryset.id %} ">
+        <div class="btn btn-primary">RECEIVE THIS ITEM</div>
+    </a>
+    <a href=" {% url 'CreateInvoice' %} ">
+        <div class="btn btn-success">GENERATE BILL</div>
+    </a>
+    <br> <br>
+    <table class="table">
+      <thead>
+        <tr>
+        
+        <th>FIRST NAME</th>
+        <th>LAST NAME</th>
+        <th>ADDRESS</th>
+        <th>CONTACT</th>
+         <th>LAST UPDATED</th>
+      
+        </tr>
+      </thead>
+  {% for customer in Customer %}
+  <tr>
+    <td>{{customer.firstName}}</td>
+    <td>{{customer.lastName}}</td>
+    <td>{{customer.address}}</td>
+    <td>{{customer.contact}}</td>
+    <td>{{customer.lastUpdated}}</td>
+  </tr>
+  {% endfor %}
+      
+    </table> 
+   
+    </div>
+</main>
+{% endblock content %}
+    

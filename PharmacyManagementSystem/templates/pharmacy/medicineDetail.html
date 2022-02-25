@@ -1,0 +1,35 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<main role="main" class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">  {{title}}</h1>  
+     <a href=" {% url 'IssueMedicine' queryset.id %} ">
+         <div class="btn btn-danger">ISSUE THIS ITEM</div>
+     </a>
+     <a href=" {% url 'ReceiveMedicine' queryset.id %} ">
+        <div class="btn btn-primary">RECEIVE THIS ITEM</div>
+    </a>
+    <br> <br>
+    <table class="table">
+      <thead>
+        <tr>        
+        <th>MEDICINE NAME</th>
+        <th>QUANTITY IN STORE</th>
+        <th>REORDER LEVEL</th>
+         <th>LAST UPDATED</th>      
+        </tr>
+      </thead>  
+      <tr>
+        <td>{{queryset.MedicineName}}</td>
+        <td>{{queryset.quantity}}</td>
+        <td>{{queryset.reorderLevel}}</td>
+        <td>{{queryset.lastUpdated}}</td>
+      </tr>
+    </table>   
+    </div>
+</main>
+{% endblock content %}
