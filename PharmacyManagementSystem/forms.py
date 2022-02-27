@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import fields
 from .models import*
 
 
@@ -63,7 +62,7 @@ class PharmacistCreateForm(forms.ModelForm):
 class CustomerCreateForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = "__all__"
+        fields = ['firstName', 'lastName', 'contact', 'address']
 class CustomerUpdateForm(forms.ModelForm):
     class Meta:
         model = Customer

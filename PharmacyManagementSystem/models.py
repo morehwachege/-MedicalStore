@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils import timezone
 
 # Create your models here
@@ -53,7 +52,7 @@ class Pharmacist(models.Model):
         
 
 class Customer(models.Model):
-    customerId = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     firstName = models.CharField(max_length=255,)
     lastName = models.CharField(max_length=255,)
     address = models.CharField(max_length=255)

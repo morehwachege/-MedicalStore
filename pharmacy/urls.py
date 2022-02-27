@@ -32,7 +32,7 @@ urlpatterns = [
 
     path('registerCustomer/', views.registerCustomer, name="registerCustomer"),
     path('customerRecords/', views.customerRecords, name="customerRecords"),
-    path('customerDetails/', views.customerDetails, name="customerDetails"),
+    path('customer_details/', views.customer_detailView, name="customer_details"),
     path('UpdateCustomer/<str:pk>/', views.UpdateCustomer, name = "UpdateCustomer"),
     path('deleteCustomer/<str:pk>/',views.deleteCustomer, name="deleteCustomer"),
 

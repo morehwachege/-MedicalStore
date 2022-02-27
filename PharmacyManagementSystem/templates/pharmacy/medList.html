@@ -33,35 +33,24 @@
           <th>MEDICINE NAME</th>
           <th>QUANTITY IN STORE</th>
           <th>REORDER LEVEL</th>
+          <th>VIEW</th>
           <th>DELETE</th>
           </tr>
         </thead>
         {% for instance in queryset %}
         <tr>
-        
-          </td>
           <td>{{ forloop.counter}}</td>
           <td>{{instance.category}}</td>
           <td><a href="{% url 'MedicineUpdate' instance.id %}"> {{instance.MedicineName}}</a></td>
-          <td>
-          {% if instance.quantity <= reorderLevel %}
-          <div style="background-color: orange; ">
-          <a href=" {% url 'medicineDeatil' instance.id %}"> {{ instance.quantity}}</a>
-          </div>
-           {% else %} 
-          <a href="{% url 'medicineDeatil' instance.id %}"> {{instance.quantity}}</a>
-          {% endif %}
-          </td>
-  
+          <td>{{ instance.quantity}}</td>
           <td><a href="{% url 'medReorderLevel' instance.id %}"> {{ instance.reorderLevel}}</a></td>
-          <td><a href= "{% url 'deleteMedicine' instance.id %}">DELETE </a></td>
+          <tD><a href="{% url 'medicineDeatil' instance.id %}" class="btn btn-success">VIEW</a></tD> 
+          <td><a href= "{% url 'deleteMedicine' instance.id %}" class="btn btn-danger">DELETE </a></td>
         </tr>
         {% endfor %}
       </table>
       </div>
-      </div>
-     
-   
+      </div>   
      </div>
   </div>
   </main>

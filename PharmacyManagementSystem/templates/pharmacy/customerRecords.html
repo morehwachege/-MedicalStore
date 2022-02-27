@@ -1,4 +1,4 @@
-{% extends 'partials/base.html' %}
+{% extends 'partials/navbar.html' %}
 {% load static %}
 {% block content %}
 
@@ -15,23 +15,21 @@
         <th>LAST NAME</th>
         <th>ADDRESS</th>
         <th>CONTACT</th>
-        <th>DATE ADDED</th>
-        
-        
-                
+        <th>DATE ADDED</th>  
         </tr>
       </thead>
       {% for customer in customers %}
       <tbody>
       <tr>
-        <td>{{ forloop.counter}}</td>
+        <td>{{forloop.counter}}</td>
         <td>{{customer.firstName}}</td>
         <td>{{customer.lastName}}</td>
         <td>{{customer.address}}</td>
         <td>{{customer.contact}}</td>
         <td>{{customer.added_on}}</td>
-        <th><a href="{% url 'customerDetails' customer.id %}" class="btn btn-primary">VIEW</a></th>          
+        <th><a href="{% url 'customer_details' customer.id %}" class="btn btn-primary">VIEW</a></th>          
         <th><a href="{% url 'deleteCustomer' customer.id %}" class="btn btn-danger">DELETE</a></th>          
+    
       </tr>
     </tbody>
       {% endfor %}

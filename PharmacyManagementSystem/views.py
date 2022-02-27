@@ -166,20 +166,20 @@ def UpdateCustomer(request, pk):
     return render(request, 'pharmacy/registerCustomer.html', context)
 
     #view single customer record
-def customerDetails(request, pk):
+def customer_detailView(request, pk):
     customer = Customer.objects.get(id=pk)
     context ={
         "title": customer.firstName,
         "customers": customer,
     }
-    return render(request, 'pharmacy/customerDetail.html', context)
+    return render(request, 'pharmacy/customer_detail.html', context)
 
 
 #Delete Record
 def deleteCustomer(request, pk):
-    queryset = Customer.objects.get(id=pk)
+    customer = Customer.objects.get(id=pk)
     if request.method == 'POST':
-        queryset.delete()
+        customer.delete()
         return HttpResponseRedirect('/customerRecords')
     return render(request, 'pharmacy/deleteCustomer.html')
 
