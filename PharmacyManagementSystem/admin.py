@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Medicine, Customer, Pharmacist
+from .models import Medicine, Pharmacist
 
 
 # Register your models here.
@@ -18,16 +18,8 @@ class PharmacistCreateForm(admin.ModelAdmin):
     list_filter = ['pharmacistName']
     search_field = ['id']
 
-from .forms import CustomerCreateForm
-class CustomerCreateForm(admin.ModelAdmin):
-    display_list = ['firstName','lastName', 'address', 'contact' 'added_on']
-    form = CustomerCreateForm
-    search_field = ['id']
-
-
 
 admin.site.register(Medicine, MedicineCreateForm)
-admin.site.register(Customer, CustomerCreateForm)
 admin.site.register(Pharmacist, PharmacistCreateForm)
 
 

@@ -52,24 +52,7 @@ class medReorderLevelForm(forms.ModelForm):
         model = Medicine
         fields = ['reorderLevel']
 
-
-
 class PharmacistCreateForm(forms.ModelForm):
     class Meta:
         model = Pharmacist
         fields = ['id', 'pharmacistName',  'address', 'phone', 'added_on']
-
-class CustomerCreateForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields = ['firstName', 'lastName', 'contact', 'address']
-class CustomerUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields= "__all__"
-
-
-
-
-
-

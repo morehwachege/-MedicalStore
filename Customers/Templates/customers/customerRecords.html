@@ -3,11 +3,11 @@
 {% block content %}
 
 {% include 'partials/navbar.html' %}
-<main role="main" class="container mt-5">
-  <div class="jumbotron">
-    <h1 class="header">  {{title}}</h1>      
+<main role="main" class="container pt-5">
+  <div class="jumbotron mt-5">
+    <h1 class="header offset-md-5 py-3">  {{title}}</h1>      
     <div class="display-table">
-    <table class="table">
+    <table class="table table-bordered">
       <thead>
         <tr>
         <th>NUMBER</th>
@@ -16,6 +16,8 @@
         <th>ADDRESS</th>
         <th>CONTACT</th>
         <th>DATE ADDED</th>  
+        <th>VIEW</th>  
+        <th>DELETE</th>  
         </tr>
       </thead>
       {% for customer in customers %}

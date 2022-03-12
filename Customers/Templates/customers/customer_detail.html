@@ -8,16 +8,8 @@
 <main role="main" class="container">
   <div class="jumbotron">
     <h1 class="text-center">  {{title}}</h1>  
-     <a href=" {% url 'IssueMedicine' queryset.id %} ">
-         <div class="btn btn-danger">ISSUE THIS ITEM</div>
-     </a>
-     <a href=" {% url 'ReceiveMedicine' queryset.id %} ">
-        <div class="btn btn-primary">RECEIVE THIS ITEM</div>
-    </a>
-    <a href=" {% url 'CreateInvoice' %} ">
-        <div class="btn btn-success">GENERATE BILL</div>
-    </a>
-    <br> <br>
+    
+      <br> <br>
     <table class="table">
       <thead>
         <tr>
@@ -30,7 +22,8 @@
       
         </tr>
       </thead>
-  {% for customer in Customer %}
+  {% for customer in customers %}
+  <tbody>
   <tr>
     <td>{{customer.firstName}}</td>
     <td>{{customer.lastName}}</td>
@@ -38,6 +31,7 @@
     <td>{{customer.contact}}</td>
     <td>{{customer.lastUpdated}}</td>
   </tr>
+</tbody>
   {% endfor %}
       
     </table> 
