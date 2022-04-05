@@ -34,7 +34,7 @@ urlpatterns = [
 
     path('addPharmacist/', views.addPharmacist, name="addPharmacist"),
     path('pharmacistRecord/', views.pharmacistRecord, name="pharmacistRecord"),
-    
+    path('medicineReport/', views.Medicine_Report, name="medicineReport"),
     path('admin/', admin.site.urls),
     #path('accounts/', include('registration.backends.default.urls')),
 ]

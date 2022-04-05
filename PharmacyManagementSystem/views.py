@@ -1,7 +1,6 @@
 from django.contrib import messages
-from django.forms.forms import Form
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 import csv
 #import reportLab for PDF generation
 #from reportlab.pdfgen import canvas
@@ -150,6 +149,20 @@ def medReorderLevel(request, pk):
     }
     return render(request, 'pharmacy/addMedicine.html', context)
 
+#Generate Medicine Report(CSV) 
+def Medicine_Report(request):
+    response = HttpResponse(content_type='text/csv')
+    response['content-Disposition']= 'attachment; filename=medicineReport.csv'
+    #Create a csv Writer
+    writer= csv.writer(response)
+    #Designate the Model
+    medicines = Medicine.objects.all()
+    #adding column  heading to the csv file 
+    writer.writerow(['MedicineName','category ','quantity', 'amount', 'reorderLevel', 'lastUpdated','added_on'])
+    #loop Through the Medicine and Output
+    for medicine in medicines:
+        writer.writerow([medicine.MedicineName,medicine.category, medicine.quantity, medicine.amount, medicine.reorderLevel, medicine.lastUpdated,medicine.added_on])          
+    return response
 
 #pharmacist
 def addPharmacist(request):

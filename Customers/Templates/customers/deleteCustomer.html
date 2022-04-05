@@ -1,21 +1,21 @@
 {% extends 'partials/base.html' %}
 {% load static %}
 {% block content %}
-
-{% endblock content %}
-
 <main role="main" class="container">
   <div class="jumbotron">
-   <form action="" method="POST">
+   <form action="{% url 'deleteCustomer' customer.id %}" method="POST">
      {% csrf_token %}
         {{form.as_p}}
-        <h1 class="text-text-capitalize"> are you sure you want to delete selected Customer?</h1>
+        <h1 class="text-text-capitalize"> are you sure you want to delete {{customer}}? </h1>
         <input class="btn btn-danger" type="submit" value="Yes">
         <a href="{% url 'customerRecords' %}"><div class="btn btn-primary">Cancel</div></a>
     </form>
     
   </div>
 </main>
+{% endblock content %}
 
-{% include 'navbar.html'  %}
+
+
+
 

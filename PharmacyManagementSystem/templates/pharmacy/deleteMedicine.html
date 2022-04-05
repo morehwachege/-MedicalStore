@@ -9,7 +9,8 @@
   <div class="jumbotron">
    <form action="" method="POST">
      {% csrf_token %}
-   <h1 class="text-text-capitalize"> are you sure you want to delete selected item?</h1>
+     {{instance}}
+   <h1 class="text-text-capitalize"> are you sure you want to delete selected item? {{instance.MedicineName}}</h1>
         {{form.as_p}}
         <input class="btn btn-danger" type="submit" value="Yes">
         <a href="/medList"><div class="btn btn-primary">Cancel</div></a>

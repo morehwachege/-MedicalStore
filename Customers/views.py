@@ -1,6 +1,9 @@
+from csv import writer
 from django.shortcuts import render, redirect
 from Customers.models import Customer
 from Customers.forms import CustomerCreateForm, CustomerUpdateForm
+from django.http import HttpResponse, response
+import csv
 
 # Create your views here.
 #Register Customers
@@ -44,7 +47,7 @@ def customer_detailView(request, pk):
     customer = Customer.objects.get(id=pk)
     context ={
         "title": customer.firstName,
-        "customers": customer,
+        "customer": customer,
     }
     return render(request, 'customers/customer_detail.html', context)
 
@@ -54,5 +57,22 @@ def deleteCustomer(request, pk):
     if request.method == 'POST':
         customer.delete()
         return redirect('customerRecords')
-    return render(request, 'customers/deleteCustomer.html')
+    context={'customer':customer}
+    return render(request, 'customers/deleteCustomer.html', context)
+
+#generate Report
+def Customer_report(request):
+    response= HttpResponse(content_type='text/csv')
+    response['content-Disposition']= 'attachment; filename= CustomerReport.csv'
+    #create a csv Writer
+    writer= csv.writer(response)
+    #Designate the model
+    customers = Customer.objects.all()
+    #add column heading to the csv file 
+    writer.writerow(['First Name', 'Last Name', 'Address', 'Phone'])
+    #Loop Through the customers object and output
+    for customer in customers:
+        writer.writerow([customer.firstName, customer.lastName, customer.address, customer.contact])
+    return response
+
 

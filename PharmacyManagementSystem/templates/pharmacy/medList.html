@@ -22,9 +22,11 @@
       </form>
       <!--add medicine button-->
       <a href="/addMedicine"> <div class="btn btn-success mt-2 rounded-pill mybutton">ADD MEDICINE</div></a>
+      <!--generate report-->
+      <a href="{% url 'medicineReport' %}"> <div class="btn btn-info mt-2 rounded-pill mybutton">Generate Report</div></a>
       </div>
       <div class="col-sm-10">
-      <div class="display-table">
+      <div class="display-table addMedicine">
       <table class="table">
         <thead>
           <tr>
