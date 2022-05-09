@@ -91,7 +91,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'medicalstore',
         'USER': 'root',
-        'PASSWORD': '@CASE!@2000..#',
+        'PASSWORD': '',
+        # 'PASSWORD': '@CASE!@2000..#',
     }
 }
 # Password validation
