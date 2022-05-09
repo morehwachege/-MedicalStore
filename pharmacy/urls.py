@@ -20,9 +20,9 @@ from PharmacyManagementSystem import views
 
 
 urlpatterns = [
-    path('', include('Customers.urls')),
+    # path('', include('Customers.urls')),
+    path('', include('Users.urls')),
 
-    path('', views.index, name="index"),
     path('medList/',views.medList, name="medList"),
     path('addMedicine/',views.addMedicine, name="addMedicine"),
     path('MedicineUpdate/<str:pk>/', views.MedicineUpdate, name = "MedicineUpdate"),
@@ -37,4 +37,11 @@ urlpatterns = [
     path('medicineReport/', views.Medicine_Report, name="medicineReport"),
     path('admin/', admin.site.urls),
     #path('accounts/', include('registration.backends.default.urls')),
+
+    path('registerCustomer/', views.registerCustomer, name="registerCustomer"),
+    path('customerRecords/', views.customerRecords, name="customerRecords"),
+    path('customer_details/<str:pk>/', views.customer_detailView, name="customer_details"),
+    path('UpdateCustomer/<str:pk>/', views.UpdateCustomer, name = "UpdateCustomer"),
+    path('deleteCustomer/<str:pk>/',views.deleteCustomer, name="deleteCustomer"),
+    path('customer_report/', views.Customer_report, name="customer_report")
 ]

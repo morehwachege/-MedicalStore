@@ -56,3 +56,12 @@ class PharmacistCreateForm(forms.ModelForm):
     class Meta:
         model = Pharmacist
         fields = ['id', 'pharmacistName',  'address', 'phone', 'added_on']
+
+class CustomerCreateForm(forms.ModelForm):
+    class Meta:
+        model = Customers
+        fields = ['firstname', 'lastname', 'contact', 'address', 'medicine']
+class CustomerUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Customers
+        fields= "__all__"

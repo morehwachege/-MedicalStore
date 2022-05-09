@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'PharmacyManagementSystem.apps.PharmacymanagementsystemConfig',
     'Customers',
+    'Users',
     
 ]
 

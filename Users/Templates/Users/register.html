@@ -1,0 +1,82 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+{% comment %} <div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        {{form}}
+
+        <input type="submit" value="Create account" class="btn btn-warning rounded-pill">
+    </form>
+</div> {% endcomment %}
+
+<div class="container jumbotron mt-5  justify-content-center">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+
+            <form action="" method="POST">
+                {% csrf_token%}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    {{form.username}}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    {{form.email}}
+                </div>
+        
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    {{form.password1}}
+                </div>
+        
+                <div class="form-group">
+                    <label for="password2">Cofirm Password</label>
+                    {{form.password2}}
+                </div>
+                
+                <input class="btn btn-primary btn-block rounded-pill" type="submit" value="Register">
+            </form>
+            <div class="mt-4">
+                <div class="d-flex ">
+                    Already have an account? <a  class="ml-2" href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- success message -->
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong class="text-center">
+            {% for message in messages %}
+            <p>{{message}}</p>
+          {% endfor %}
+        </strong>
+    </div>
+<!-- success message -->
+            
+        </div>
+    </div>
+   
+<script>
+    const form_fields = document.getElementsByTagName('input')
+    form_fields[1].placeholder="username";
+    form_fields[2].placeholder="enter email address";
+    form_fields[3].placeholder="enter password";
+    form_fields[4].placeholder="re-enter password";
+
+    for(let field in form_fields){
+        form_fields[field].className += 'form-control'
+    }
+    
+</script>
+{% endblock content %}

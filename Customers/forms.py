@@ -1,11 +1,11 @@
-from django import forms
-from Customers.models import Customer
+# from django import forms
+# from Customers.models import Customers
 
-class CustomerCreateForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields = ['firstName', 'lastName', 'contact', 'address']
-class CustomerUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields= "__all__"
+# class CustomerCreateForm(forms.ModelForm):
+#     class Meta:
+#         model = Customers
+#         fields = ['firstname', 'lastname', 'contact', 'address']
+# class CustomerUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Customers
+#         fields= "__all__"

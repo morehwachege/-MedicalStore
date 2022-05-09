@@ -43,4 +43,17 @@ class Pharmacist(models.Model):
 
     def __str__(self):
      return self.name
+
+
+class Customers(models.Model):
+    firstname = models.CharField(max_length=255,)
+    lastname = models.CharField(max_length=255,)
+    address = models.CharField(max_length=255)
+    contact = models.IntegerField()
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+    
+
+    def __str__(self):
+        return self.firstname
         

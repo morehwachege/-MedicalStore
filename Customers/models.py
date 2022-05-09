@@ -1,22 +1,17 @@
-from django.db import models
-from PharmacyManagementSystem.models import Medicine
+# from django.db import models
+# from PharmacyManagementSystem.models import Medicine
 
-# Create your models here.
-class Customer(models.Model):
-    firstName = models.CharField(max_length=255,)
-    lastName = models.CharField(max_length=255,)
-    address = models.CharField(max_length=255)
-    contact = models.IntegerField()
-    medicine = models.ForeignKey(Medicine, blank=True, default=1, on_delete=models.CASCADE)
-    added_on = models.DateTimeField(auto_now_add=True)
-    # height = models.PositiveIntegerField(null=True)
-    # weight = models.PositiveIntegerField(null=True)   
+# # Create your models here.
+
+# # class Customer(models.Model):
+# #     firstname = models.CharField(max_length=255,)
+# #     lastname = models.CharField(max_length=255,)
+# #     address = models.CharField(max_length=255)
+# #     contact = models.IntegerField()
+# #     medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+# #     date_added = models.DateTimeField(auto_now_add=True)
     
 
-    def __str__(self):
-        return self.firstName
-    
-    
-
-   
+# #     def __str__(self):
+# #         return self.firstname
 
