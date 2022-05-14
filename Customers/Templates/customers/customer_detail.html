@@ -13,20 +13,20 @@
     <table class="table">
       <thead>
         <tr>
-        <th>Fisrtname</th>
-        <th>Lastname</th>
+        <th>Full Name</th>
         <th>Address</th>
-        <th>Medcine</th>        
+        <th>Medicine</th>        
+        <th>Quantity</th>        
         <th>Update</th>        
         </tr>
       </thead>
   <tbody>
   <tr>
-    <td>{{customer.firstname}}</td>
-    <td>{{customer.lastname}}</td>
+    <td>{{customer.firstname}} {{customer.lastname}}</td>
     <td>{{customer.address}}</td>
     <td>{{customer.medicine.MedicineName}}</td>  
-    <th><a href="{% url 'UpdateCustomer' customer.id %}" class="btn btn-success"> UPDATE </a></th>      
+    <td>{{customer.medicine.quantity}} mg</td>
+    <th><a href="{% url 'UpdateCustomer' customer.id %}" class="btn btn-success"> UPDATE </a></th> 
   </tr>
 </tbody>
 </table> 
