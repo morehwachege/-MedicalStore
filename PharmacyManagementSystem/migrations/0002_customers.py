@@ -20,7 +20,6 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(max_length=255)),
                 ('contact', models.IntegerField()),
                 ('date_added', models.DateTimeField(auto_now_add=True)),
-                ('medicine', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='PharmacyManagementSystem.medicine')),
             ],
         ),
     ]

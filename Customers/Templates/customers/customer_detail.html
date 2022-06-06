@@ -15,8 +15,8 @@
         <tr>
         <th>Full Name</th>
         <th>Address</th>
-        <th>Medicine</th>        
-        <th>Quantity</th>        
+        <th>Contact</th>
+        <th>Date Added</th>
         <th>Update</th>        
         </tr>
       </thead>
@@ -24,13 +24,39 @@
   <tr>
     <td>{{customer.firstname}} {{customer.lastname}}</td>
     <td>{{customer.address}}</td>
-    <td>{{customer.medicine.MedicineName}}</td>  
-    <td>{{customer.medicine.quantity}} mg</td>
+    <td>{{customer.contact}}</td>
+    <td>{{customer.date_added}}</td>
+    
     <th><a href="{% url 'UpdateCustomer' customer.id %}" class="btn btn-success"> UPDATE </a></th> 
   </tr>
 </tbody>
 </table> 
 </div>
 </main>
+
+<div class="container">
+  <h3 class="display-4 text-center font-weight-bold">Orders Made</h3>
+<table class="table  table-bordered table-dark table-hover">
+  <thead>
+    <tr>
+    <th>Medicine</th>              
+    <th>Amount Paid</th>        
+    <th>Quantity</th>        
+    <th>Date</th>        
+    </tr>
+  </thead>
+<tbody>
+  {% for order in orders%}
+<tr>
+<td>{{order.medicine}}</td>
+<td>{{order.total_price}}</td>  
+<td>{{order.medicine.quantity}} mg</td>
+<td>{{order.date}} mg</td>
+</tr>
+</tbody>
+{% endfor %}
+</table> 
+</div>
+
 {% endblock content %}
     

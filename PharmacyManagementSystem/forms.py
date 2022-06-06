@@ -60,8 +60,17 @@ class PharmacistCreateForm(forms.ModelForm):
 class CustomerCreateForm(forms.ModelForm):
     class Meta:
         model = Customers
-        fields = ['firstname', 'lastname', 'contact', 'address', 'medicine']
+        fields = ['firstname', 'lastname', 'contact', 'address']
 class CustomerUpdateForm(forms.ModelForm):
     class Meta:
         model = Customers
         fields= "__all__"
+
+class OrderCreateForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['customer', 'medicine', 'quantity', 'price', 'total_price']
+class OrderUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields= ['customer', 'medicine', 'quantity', 'price', 'total_price']

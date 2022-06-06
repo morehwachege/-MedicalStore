@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'PharmacyManagementSystem.apps.PharmacymanagementsystemConfig',
     'Customers',
     'Users',
+    'Orders',
     
 ]
 
@@ -91,8 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'medicalstore',
         'USER': 'root',
-        'PASSWORD': '',
-        # 'PASSWORD': '@CASE!@2000..#',
+        'PASSWORD': '@CASE!@2000..#',
     }
 }
 # Password validation

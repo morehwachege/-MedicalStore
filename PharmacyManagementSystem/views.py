@@ -2,15 +2,16 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 import csv
-#import reportLab for PDF generation
-#from reportlab.pdfgen import canvas
-#from reportlab.lib.pagesizes import letter
-#from reportlab.lib.pagesizes import landscape
+from django.db.models import Sum
 from .models import*
 from .forms import*
-from .forms import  MedicineCreateForm, MedicineUpdateForm, PharmacistCreateForm, MedicineSearchForm, MedicineUpdateForm,IssueMedicineCreateForm, ReceiveMedicineForm, medReorderLevelForm
-
+from .forms import  MedicineCreateForm, MedicineUpdateForm, PharmacistCreateForm, MedicineSearchForm, MedicineUpdateForm,IssueMedicineCreateForm, ReceiveMedicineForm, medReorderLevelForm, OrderCreateForm, OrderUpdateForm
 from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 
 # Create your views here.
@@ -95,7 +96,7 @@ def IssueMedicine(request, pk):
         instance.receiveQuantity = 0
         instance.quantity -= instance.issueQuantity
         if instance.issueQuantity > queryset.quantity:
-            messages.info(request, "there isn't enough Quantity in store to issue" + instance.issueQuanty)
+            messages.info(request, "there isn't enough Quantity in store to issue" + str(instance.issueQuantity))
             instance.issueBy = str(request.user)
         else:
             messages.success(request, "Issued successfully." + str(instance.quantity) + " " + str(instance.MedicineName) +
@@ -233,9 +234,11 @@ def UpdateCustomer(request, pk):
 @login_required(login_url='login')      
 def customer_detailView(request, pk):
     customer = Customers.objects.get(id=pk)
+    orders=customer.order_set.all()
     context ={
         "title": customer.firstname,  
         "customer": customer,
+        'orders':orders,
     }
     return render(request, 'customers/customer_detail.html', context)
 
@@ -263,5 +266,93 @@ def Customer_report(request):
     #Loop Through the customers object and output
     for customer in customers:
         writer.writerow([customer.firstname, customer.lastname, customer.address, customer.contact])
+    return response
+
+def create_order(request):
+    form = OrderCreateForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('orders')
+    context ={
+            "form": form,
+            "title": "Create New Order"
+        }
+    return render(request, "orders/create_order.html", context)
+
+# @login_required(login_url='login')   
+def orders_view(request):
+    title = 'Sales'
+    orders = Order.objects.all()
+    sales = Order.objects.all().aggregate(total_sales=Sum('total_price'))
+    context ={
+        "title": title,
+        "orders":orders,
+        "sales":sales,
+    }
+    return render(request, "orders/orders.html", context)
+
+# #update customer record
+# @login_required(login_url='login')   
+def update_order(request, pk):
+    order = Order.objects.get(id=pk)
+    form = OrderUpdateForm(instance = order)
+    if request.method == 'POST':
+        form = OrderUpdateForm(request.POST, instance = order)
+        if form.is_valid():
+            form.save()
+        return redirect('orders')
+    context ={
+        "form":form,
+        "title": "Update Item"
+    }
+    return render(request, 'orders/create_order.html', context)
+
+ #Delete Record
+@login_required(login_url='login')   
+def delete_order(request, pk):
+    order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('customerRecords')
+    context={'order':order}
+    return render(request, 'orders/delete_order.html', context)
+
+#generate receipt
+def print_receipt(request, pk):
+    orders=Order.objects.get(id=pk)
+    template_path = 'orders/receipt.html'
+    
+    context={
+        'orders':orders,
+    }
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+  
+# generate Report
+@login_required(login_url='login')   
+def order_report(request):
+    response= HttpResponse(content_type='text/csv')
+    response['content-Disposition']= 'attachment; filename= CustomerReport.csv'
+    #create a csv Writer
+    writer= csv.writer(response)
+    #Designate the model
+    orders = Order.objects.all()
+    #add column heading to the csv file 
+    writer.writerow(['Customer Name', 'Medicine', 'Quantity', 'Price', 'Total Price', 'Date'])
+    #Loop Through the customers object and output
+    for order in orders:
+        writer.writerow([order.customer, order.medicne, order.price, order.total_price, order.date])
     return response
 

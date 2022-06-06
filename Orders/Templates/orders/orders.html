@@ -1,0 +1,51 @@
+{% extends 'partials/navbar.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<div class="container mt-5">
+  <h1 class="header offset-md-5 py-3">{{title}}</h1>      
+        <div class="display-table">
+        <table class="table table-bordered table-dark">
+          <thead>
+            <tr>
+            <th>No.</th>
+            <th>Customer</th>
+            <th>Medicine</th>
+            <th>Quantity</th>           
+            <th>Price</th>                
+            <th>Total Amount</th>                
+            <th>Date</th>                
+            <th>Update</th>  
+            <th>Receipts</th>  
+            <th>Delete</th>  
+            </tr>
+          </thead>
+          {% for orders in orders %}
+          <tbody>
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{orders.customer}}</td>
+            <td>{{orders.medicine}}</td>
+            <td>{{orders.quantity}}</td>            
+            <td>{{orders.price}}</td>            
+            <td>{{orders.total_price}}</td>            
+            <td>{{orders.date}}</td>            
+            <td><a href="{% url 'update_order' orders.id %}" class="btn btn-success">Update</a></td>  
+            <td><a href="{% url 'print_receipt' orders.id %}" class="btn btn-primary">Print Receipt</a></td>  
+                
+            <td><a href="{% url 'delete_order' orders.id %}" class="btn btn-danger">Delete</a></td>          
+        
+          </tr>
+        </tbody>
+          {% endfor %}
+          <td colspan="9" class="text-center">Total Sales {{ sales.total_sales}}<td/>
+        </table>  
+       
+      </div>
+</div>
+
+{% endblock content %}
+
+

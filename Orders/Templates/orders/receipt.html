@@ -1,0 +1,35 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+<main role="main" class="container mt-5">
+  <div class="jumbotron">
+   <h2 class="text-center">Kokebe Pharmaceuticals</h2>
+   <p>{{ orders.customer}} {{ orders.customer.lastname}}</p>
+   <table class="table table-bordered table-dark">
+    <thead>
+      <tr>
+      <th>Customer</th>
+      <th>Medicine</th>
+      <th>Quantity</th>           
+      <th>Price</th>                
+      <th>Total Amount</th>                
+      <th>Date</th>                 
+      </tr>
+    </thead>
+       <tbody>
+    <tr>
+      <td>{{orders.customer}} {{ orders.customer.lastname}}</td>
+      <td>{{orders.medicine}}</td>
+      <td>{{orders.quantity}}</td>            
+      <td>{{orders.price}}</td>            
+      <td>{{orders.total_price}}</td>            
+      <td>{{orders.date}}</td>                     
+  
+    </tr>
+  </tbody>
+    <td colspan="9" class="text-center">Total Sales {{ sales.total_sales}}<td/>
+  </table>  
+    
+  </div>
+</main>
+{% endblock content %}

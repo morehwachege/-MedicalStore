@@ -31,6 +31,12 @@ class Medicine(models.Model):
 
     def __str__(self):
         return self.MedicineName
+
+    @property
+    def reject_issueing(self):
+        if self.issueQuantity > self.quantity:
+            return "There isn't enough to issue" + self.MedicineName
+    
  
 
 class Pharmacist(models.Model):
@@ -50,10 +56,30 @@ class Customers(models.Model):
     lastname = models.CharField(max_length=255,)
     address = models.CharField(max_length=255)
     contact = models.IntegerField()
-    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
     
 
     def __str__(self):
         return self.firstname
+
+class Order(models.Model):
+    customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+    quantity = models.PositiveBigIntegerField()
+    price =  models.FloatField()
+    total_price = models.FloatField()
+    date = models.DateTimeField(auto_now_add=True)
+    date_updated= models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.customer.firstName
+    
+    # def get_absolute_url(self):
+    #     """Returns the URL to access a particular author instance."""
+    #     return reverse('author-detail', args=[str(self.id)])
+  
+    # def save(self, *args, **kwargs):
+    #     self.total_price = self.quantity*self.price
+    #     return super(Order, self).save(**args, **kwargs)
+
         

@@ -22,6 +22,7 @@ from PharmacyManagementSystem import views
 urlpatterns = [
     # path('', include('Customers.urls')),
     path('', include('Users.urls')),
+    #path('', include('Orders.urls')),
 
     path('medList/',views.medList, name="medList"),
     path('addMedicine/',views.addMedicine, name="addMedicine"),
@@ -43,5 +44,12 @@ urlpatterns = [
     path('customer_details/<str:pk>/', views.customer_detailView, name="customer_details"),
     path('UpdateCustomer/<str:pk>/', views.UpdateCustomer, name = "UpdateCustomer"),
     path('deleteCustomer/<str:pk>/',views.deleteCustomer, name="deleteCustomer"),
-    path('customer_report/', views.Customer_report, name="customer_report")
+    path('customer_report/', views.Customer_report, name="customer_report"),
+
+    path('new_order/', views.create_order, name="new_order"),
+    path('orders/', views.orders_view, name="orders"),
+    path('update_order/<str:pk>/', views.update_order, name="update_order"),
+    path('delete_order/<str:pk>/', views.delete_order, name="delete_order"),
+    path('print_receipt/<str:pk>/', views.print_receipt, name="print_receipt"),
+    path('order_report/', views.order_report, name="order_report"),
 ]
