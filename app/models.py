@@ -1,83 +1,71 @@
 from django.db import models
-# from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here
-#Choice field for medicine category
-categoryChoice = (
-    ('painkillers', 'painkillers'),
-    ('antibiotics', 'antibiotics'),
-    ('contraceptives', 'contarceptives'),
-)
 
 class Category(models.Model):
     name = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
 
-   
+    def __str__(self):
+        return self.name
 
 class Medicine(models.Model):
     id = models.AutoField(primary_key=True)
-    MedicineName = models.CharField(max_length=255, null=False)
-    category = models.CharField(max_length=255, null=False)
-    medicineId = models.CharField(max_length=255)
-    quantity = models.IntegerField()
-    amount = models.IntegerField(default=0, null=True)
-    issueQuantity =models.IntegerField(null=True, default=0)
-    reorderLevel = models.IntegerField(null=True)
-    issueTo = models.CharField(max_length=50, null=True)
-    receivedBy = models.CharField(max_length=50, null=True)
-    receiveQuantity = models.IntegerField(null=True, default=0)
-    added_on = models.DateTimeField(auto_now_add=True, auto_now=False)
-    lastUpdated= models.DateTimeField(auto_now=True, auto_now_add=False)
+    name = models.CharField(max_length=255)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    medicine_id = models.CharField(max_length=255, unique=True)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    reorder_level = models.PositiveIntegerField(null=True, blank=True)
+    received_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    added_on = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.MedicineName
+        return self.name
 
-    @property
-    def reject_issueing(self):
-        if self.issueQuantity > self.quantity:
-            return "There isn't enough to issue" + self.MedicineName
+    def update_stock(self, quantity):
+        """Update stock quantity and handle reorder level alert."""
+        self.quantity -= quantity
+        if self.quantity < 0:
+            self.quantity = 0  # Prevent negative stock
+        self.save()
 
-class Pharmacist(models.Model):
-    id = models.AutoField(primary_key=True)
-    pharmacistName = models.CharField(max_length =30)
-    joining_date = models.DateField()
-    phone = models.CharField(max_length=255)
+class Customer(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    added_on = models.DateTimeField()
-
-    def __str__(self):
-     return self.name
-
-
-class Customers(models.Model):
-    firstname = models.CharField(max_length=255,)
-    lastname = models.CharField(max_length=255,)
-    address = models.CharField(max_length=255)
-    contact = models.IntegerField()
+    contact = models.CharField(max_length=20)
     date_added = models.DateTimeField(auto_now_add=True)
-    
 
     def __str__(self):
-        return self.firstname
+        return f"{self.first_name} {self.last_name}"
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
-    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
-    quantity = models.PositiveBigIntegerField()
-    price =  models.FloatField()
-    total_price = models.FloatField()
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    date_updated= models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.customer.firstName
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     
-    # def get_absolute_url(self):
-    #     """Returns the URL to access a particular author instance."""
-    #     return reverse('author-detail', args=[str(self.id)])
-  
-    # def save(self, *args, **kwargs):
-    #     self.total_price = self.quantity*self.price
-    #     return super(Order, self).save(**args, **kwargs)
+    def __str__(self):
+        return f"Order {self.id} by {self.customer.first_name}"
 
-        
+    def save(self, *args, **kwargs):
+        """Calculate total amount and update medicine stock when saving the order."""
+        if self.pk is None:  # Only calculate total amount for new orders
+            self.total_amount = sum(item.total_price for item in self.orderitem_set.all())
+        super().save(*args, **kwargs)  # Save the order first
+        for item in self.orderitem_set.all():
+            item.medicine.update_stock(item.quantity)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+
+    def save(self, *args, **kwargs):
+        """Calculate total price before saving."""
+        self.total_price = self.quantity * self.price
+        super().save(*args, **kwargs)
